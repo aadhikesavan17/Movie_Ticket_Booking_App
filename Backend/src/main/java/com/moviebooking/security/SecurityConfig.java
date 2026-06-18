@@ -33,8 +33,8 @@ public class SecurityConfig {
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         	.authorizeHttpRequests(auth -> auth
         		    .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-        		    .requestMatchers("/auth/register", "/auth/login", "/").permitAll()
-        		    .requestMatchers("/booking").authenticated()
+        		    .requestMatchers("/auth/**").permitAll()
+        		    .requestMatchers("/booking/**").authenticated()
         		    .anyRequest().authenticated()
         		)
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
@@ -57,7 +57,11 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
 
-        config.setAllowedOrigins(List.of("http://localhost:5173"));
+        config.setAllowedOriginPatterns(List.of(
+            "http://localhost:5173",
+            "http://localhost:3000",
+            "https://*.netlify.app"
+        )); // or we can use config.setAllowedOriginPatterns(List.of("*")) to allow all origins
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
