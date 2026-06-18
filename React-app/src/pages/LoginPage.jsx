@@ -105,7 +105,7 @@ function LoginPage() {
 
       const data = await response.json();
 
-      if (data.success && data.token) {
+      if (data.token) {
         // Save token + user info exactly like before
         localStorage.setItem("token", data.token);
         localStorage.setItem("user", JSON.stringify({
