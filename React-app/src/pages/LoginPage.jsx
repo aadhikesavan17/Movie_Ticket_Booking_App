@@ -74,6 +74,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./LoginPage.css";
 
+const BASE_URL = import.meta.env.VITE_API_URL;
+
 function LoginPage() {
   const [isRegister, setIsRegister] = useState(false);
   const [name, setName] = useState("");
@@ -86,10 +88,10 @@ function LoginPage() {
     e.preventDefault();
     setError("");
 
-    const url = isRegister
-    ? "http://localhost:8080/auth/register"
-    : "http://localhost:8080/auth/login";
-
+   const url = isRegister
+    ? `${BASE_URL}/auth/register`
+    : `${BASE_URL}/auth/login`;
+    
     const body = isRegister
       ? { name, email, password }
       : { email, password };
